@@ -14,7 +14,7 @@
  *
  */
 definition(
-    name: "Control Switch With Virtual Switch",
+    name: "Turn on heat with With Virtual Switch",
     namespace: "michaeljcohen",
     author: "Michael Cohen",
     description: "Control a switch with a virtual switch",

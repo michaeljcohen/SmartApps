@@ -19,10 +19,10 @@
  *
  */
 definition(
-    name: "Toggle Switch - Button Handler",
+    name: "On / Off Switch Button Handler",
     namespace: "michaeljcohen",
     author: "Michael Cohen",
-    description: "Button Handler",
+    description: "Use a GoControl Wireless 2-button controller to turn a switch on and off.  Top button is on, bottom button is off",
     category: "",
     iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
     iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
@@ -33,7 +33,6 @@ preferences {
 	section("Title") {
         input "twoButtonControl", "capability.button", required: true, title: "Two Button Control"
         input "switchOne", "capability.switch", required: true, title: "Switch To Control"
-        input "switchTwo", "capability.switch", required: true, title: "Switch To Control"
 	}
 }
 
@@ -60,21 +59,10 @@ def topPushedHandler(evt) {
     def buttonNumber = parseJson(evt.data).buttonNumber
 
 	if(buttonNumber == 1){
-    	log.debug 'button 1!'
-        toggle(switchOne)
+    	switchOne.on()
     }
     else if (buttonNumber == 2){
     	log.debug 'button 2!'
-        toggle(switchTwo)
-    }
-	
-}
-
-def toggle(localSwitch){
-	def currentStatus = localSwitch.currentValue("switch")
-    if(currentStatus == "off"){
-    	localSwitch.on()
-    } else {
-	    localSwitch.off()
+    	switchOne.off()
     }
 }

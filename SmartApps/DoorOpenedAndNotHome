@@ -27,7 +27,7 @@ definition(
 preferences {
 	section("When the door opens..."){
 		input "contact1", "capability.contactSensor", title: "Where?"
-        input "arrivalPresence", "capability.presenceSensor", title: "Arrival Of", required: true
+        input "arrivalPresence", "capability.presenceSensor", title: "Device Not Home", required: true
 	}
     section("Send a text message to this number") {
         input "phone", "phone", required: true
@@ -48,12 +48,13 @@ def updated()
 def contactOpenHandler(evt) {
 	log.trace "$evt.value: $evt, $settings"
 
-	log.debug "$contact1 was opened, sending push message to user"
-
     def presenceState = arrivalPresence.currentState("presence")
 	log.debug presenceState.value
-    
-    if (presenceState.value != "present") {
-    	sendSms(phone, "Door opened and you're not home")
+
+    if ("$presenceState.value" == "present") {
+		log.debug "$contact1 was opened and present, not sending push message to user"
+    } else {
+        log.debug "$contact1 was opened and not present, sending push message to user"
+        sendSms(phone, "Door opened and you're not home")
     }
 }

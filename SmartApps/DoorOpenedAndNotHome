@@ -53,7 +53,7 @@ def contactOpenHandler(evt) {
     def presenceState = arrivalPresence.currentState("presence")
 	log.debug presenceState.value
     
-    if (presenceState.value == "present") {
+    if (presenceState.value != "present") {
     	sendSms(phone, "Door opened and you're not home")
     }
 }
